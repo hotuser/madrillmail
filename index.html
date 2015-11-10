@@ -1,0 +1,41 @@
+<html>
+<head>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <script type="text/javascript" src="https://mandrillapp.com/api/docs/js/mandrill.js"></script>
+</head>
+<body>
+  <input type='text' id='content' placeholder='content'>
+  <input type='text' id='subject' placeholder='subject'>
+  <input type="text" id="apiKey" placeholder='apiKey'>
+  <br>
+  <br>
+
+  <input type="text" id="from" placeholder='from'>
+  <input type="text" id="to" placeholder='to'>
+  <button type="submit" id="submitButton">Send Mail</button>
+  <script>
+    $("#submitButton").click(function(e){
+      var apiKey = $("#apiKey").val();
+      var content = $("#content").val();
+      var subject = $("#subject").val();
+      var from = $("#from").val();
+      var to = $("#to").val();
+      var m = new mandrill.Mandrill(apiKey); 
+      var params = {
+        "message": {
+          "from_email":from,
+          "to":[{"email":to}],
+          "subject": subject,
+          "text": content
+        }
+      };
+      m.messages.send(params, function(res) {
+        console.log(res);
+        alert("Sent successfully");
+      }, function(err) {
+        console.log(err);
+      });
+    });
+  </script>
+</body>
+</html>
